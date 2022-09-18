@@ -6,6 +6,18 @@ function init() {
   // workers. This installs a handler that will proxy creating web
   // workers through the main thread
   initBackend(worker);
+  return worker
+}
+const worker = init();
+
+
+window.myFunction = () =>{
+  console.log('click');
+  // call worker.index.js
+  worker.postMessage("index.js");
 }
 
-init();
+worker.onmessage = (event) => {
+  console.log(`Worker said :`, event.data );
+};
+
